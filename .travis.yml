@@ -1,0 +1,16 @@
+services:
+    - docker
+   
+script:
+    - docker build -t qngha7/udagram-api-feed:v1 ./udagram-api-feed
+    - docker build -t qngha7/udagram-api-user:v1 ./udagram-api-user
+    - docker build -t qngha7/reverseproxy:v1 ./udagram-reverseproxy
+    - docker build -t qngha7/udagram-frontend:v1 ./udagram-frontend
+    
+
+after_success:
+    - echo "quanghaha" | docker login -u "qngha7" --password-stdin
+    - docker push qngha7/udagram-api-feed:v1
+    - docker push qngha7/reverseproxy:v1
+    - docker push qngha7/udagram-api-user:v1
+    - docker push qngha7/udagram-frontend:v1

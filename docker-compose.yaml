@@ -1,0 +1,44 @@
+version: "3"
+services:
+  reverseproxy:
+      image: reverseproxy
+      container_name: reverseproxy
+      ports:
+          - 8080:8080
+      restart: always
+      depends_on:
+        - backend-user
+        - backend-feed
+  backend-user:
+    image: udagram-api-user
+    container_name: udagram-api-user
+    environment:
+      POSTGRES_USERNAME: "quang"
+      POSTGRES_PASSWORD: "quanghaha"
+      POSTGRES_DB: "postgres"
+      POSTGRES_HOST: "cdr.c5rl4ztuugdg.us-west-2.rds.amazonaws.com"
+      AWS_REGION: "us-west-2"
+      AWS_PROFILE: "default"
+      AWS_BUCKET: "test-16082022-dev"
+      JWT_SECRET: "hello"
+      URL: "http://localhost:8100"
+  backend-feed:
+    image: udagram-api-feed
+    container_name: udagram-api-feed
+    volumes:
+      - C:/Users/Administrator/.aws:/root/.aws
+    environment:
+      POSTGRES_USERNAME: "quang"
+      POSTGRES_PASSWORD: "quanghaha"
+      POSTGRES_DB: "postgres"
+      POSTGRES_HOST: "cdr.c5rl4ztuugdg.us-west-2.rds.amazonaws.com"
+      AWS_REGION: "us-west-2"
+      AWS_PROFILE: "default"
+      AWS_BUCKET: "test-16082022-dev"
+      JWT_SECRET: "hello"
+      URL: "http://localhost:8100"
+  frontend:
+    image: udagram-frontend:local
+    container_name: udagram-frontend
+    ports:
+      - "8100:80"
