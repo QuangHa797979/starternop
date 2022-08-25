@@ -13,5 +13,4 @@ after_success:
     - docker push qngha7/udagram-api-feed:v1
     - docker push qngha7/reverseproxy:v1
     - docker push qngha7/udagram-api-user:v1
-    - docker push qngha7/udagram-frontend:v1
-    # //push
+    - docker push qngha7/udagram-frontend:v
